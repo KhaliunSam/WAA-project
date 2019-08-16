@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+<script src="/js/jquery-3.4.1.min.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/buyer.js"></script>
+<title>Dashboard::BUYER</title>
+
+<style type="text/css">
+	.btn-width { width: 100px; }
+	.validation-message { color: red; }
+</style>
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg bg-info text-white">
+		<div class="container">
+		<span th:text="'Hello ' + ${email} + '::::'"></span>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item"><a class="nav-link text-white" href="/buyer/">Sellers</a></li>
+		      	<li class="nav-item"><a class="nav-link text-white" href="/buyer/follow">Follow/Unfollow</a></li>
+		      	<li class="nav-item"><a class="nav-link text-white" href="/buyer/address">Address</a></li>
+		      	<li class="nav-item"><a class="nav-link text-white" href="/buyer/payment">Payment/Card</a></li>
+		      	<li class="nav-item"><a class="nav-link text-white" href="/buyer/history">Order history</a></li>
+		      	<li class="nav-item"><a class="nav-link text-white" href="/buyer/shopping-cart">Shopping card</a></li>
+			</ul>
+		</div>
+		</div>
+	</nav>
+	<hr>
+	<div class="container">
+	
+		<h2 class="text-info">New shipping address</h2>
+		<form method="POST" th:action="@{/buyer/address/add}" th:object="${address}">
+			<input th:field="*{id}" type="hidden" />
+			<div class="form-group">
+				<label>Street</label>
+				<input th:field="*{street}" type="text" class="form-control" placeholder="Street">
+				<small th:if="${#fields.hasErrors('street')}" th:errors="*{street}" class="validation-message"></small>
+			</div>
+			<div class="form-group">
+				<label>City</label>
+				<input th:field="*{city}" type="text" class="form-control" th:placeholder="City">
+				<small th:if="${#fields.hasErrors('city')}" th:errors="*{city}" class="validation-message"></small>
+			</div>
+			<div class="form-group">
+				<label>City</label>
+				<input th:field="*{state}" type="text" class="form-control" th:placeholder="State">
+				<small th:if="${#fields.hasErrors('state')}" th:errors="*{state}" class="validation-message"></small>
+			</div>
+			<div class="form-group">
+				<label>Zip code</label>
+				<input th:field="*{zip}" type="text" class="form-control" placeholder="Zip code">
+				<small th:if="${#fields.hasErrors('zip')}" th:errors="*{zip}" class="validation-message"></small>
+			</div>
+			<input type="hidden" name="isUpdate" th:if="${update==null}" value="false">
+			<input type="hidden" name="isUpdate" th:if="${update!=null}" value="true">
+			
+			<button th:if="${address.id==null}" class="btn btn-outline-info" type="submit">Save</button>
+			<button th:if="${address.id!=null}" class="btn btn-outline-info" type="submit">Update</button>
+		</form>
+	</div>
+</body>
+</html>

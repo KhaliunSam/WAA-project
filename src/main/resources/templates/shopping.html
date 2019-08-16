@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+<script src="/js/jquery-3.4.1.min.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/buyer.js"></script>
+<title>Dashboard::BUYER</title>
+
+<style type="text/css">
+	.btn-width { width: 100px; }
+</style>
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg bg-info text-white">
+		<div class="container">
+		<span th:text="'Hello ' + ${email} + '::::'"></span>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item"><a class="nav-link text-white" href="/buyer/">Sellers</a></li>
+		      	<li class="nav-item"><a class="nav-link text-white" href="/buyer/follow">Follow/Unfollow</a></li>
+		      	<li class="nav-item"><a class="nav-link text-white" href="/buyer/address">Address</a></li>
+		      	<li class="nav-item"><a class="nav-link text-white" href="/buyer/payment">Payment/Card</a></li>
+		      	<li class="nav-item"><a class="nav-link text-white" href="/buyer/history">Order history</a></li>
+		      	<li class="nav-item"><a class="nav-link text-white" href="/buyer/shopping-cart">Shopping card</a></li>
+			</ul>
+		</div>
+		</div>
+	</nav>
+	<hr>
+	<div class="container">
+	
+		<h1 th:text="'Welcome ' + ${firstName}"></h1>
+		<hr>
+		<div th:if="${products==null or products.empty}">There is no product</div>
+		<table class="table table-hover" th:if="${products!=null and !products.empty}">
+		    <thead class="table-primary">
+			    <th scope="col">Product Name</th>
+			    <th scope="col">Description</th>
+			    <th scope="col">Price</th>
+			    <th scope="col">Quantity</th>
+			    <th scope="col">Operation</th>
+		    </thead>
+		    <tbody>
+			    <tr th:each="ps:${products}" th:id="'prod_' + ${ps.id}">
+			        <td th:text="${ps.name}"></td>
+			        <td th:text="${ps.description}"></td>
+			        <td th:text="${ps.price}"></td>
+			        <td><input type="number" th:id="'pq_' + ${ps.id}" value="1" min="1" max="1000"></td>
+			        <td th:id="'oper_' + ${ps.id}">
+			        	<button class="btn btn-outline-info" th:data-productId="${ps.id}"
+			        		onclick="addToCart(this.getAttribute('data-productId'));">Add to cart</button>
+			        </td>
+			        
+			    </tr>
+		    </tbody>
+		</table>
+		<a class="btn btn-outline-info" href="seller/product/add">Add a New Product</a>
+	</div>
+</body>
+</html>

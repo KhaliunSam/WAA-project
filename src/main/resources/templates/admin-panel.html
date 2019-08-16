@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+<script src="/js/jquery-3.4.1.min.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<title>Admin panel</title>
+</head>
+<body>
+	<h1 class="text-center">Admin Panel</h1><hr>
+	<p>Pending seller requests: <a th:href="@{/admin/pending-sellers}" th:text="${sellerRequests}"></a> </p>
+	<p>Pending review requests: <a th:href="@{/admin/pending-reviews}" th:text="${reviewRequests}"></a> </p>
+</body>
+</html>

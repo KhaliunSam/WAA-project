@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+<script src="/js/jquery-3.4.1.min.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/buyer.js"></script>
+<title>Dashboard::BUYER</title>
+
+<style type="text/css">
+	.btn-width { width: 100px; }
+</style>
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg bg-info text-white">
+		<div class="container">
+		<span th:text="'Hello ' + ${email} + '::::'"></span>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item"><a class="nav-link text-white" href="/buyer/">Sellers</a></li>
+		      	<li class="nav-item"><a class="nav-link text-white" href="/buyer/follow">Follow/Unfollow</a></li>
+		      	<li class="nav-item"><a class="nav-link text-white" href="/buyer/address">Address</a></li>
+		      	<li class="nav-item"><a class="nav-link text-white" href="/buyer/payment">Payment/Card</a></li>
+		      	<li class="nav-item"><a class="nav-link text-white" href="/buyer/history">Order history</a></li>
+		      	<li class="nav-item"><a class="nav-link text-white" href="/buyer/shopping-cart">Shopping card</a></li>
+			</ul>
+		</div>
+		</div>
+	</nav>
+	<hr>
+	<div class="container">
+	
+		<h2 class="text-info">Order history</h2>
+		<div th:if="${orders==null or orders.empty}">No product in shopping cart</div>
+		<div th:if="${orders!=null and !orders.empty}">
+		
+			<div th:each="order : ${orders}">
+				<div th:text="${order.orderedDate}"></div>
+				<div th:text="${order.shippingAddress}"></div>
+				<div th:text="${order.orderedDate}"></div>
+			
+			
+				<hr>
+				<br>
+			</div>
+		
+		
+		
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th scope="col">Product</th>
+						<th scope="col">Quantity</th>
+						<th scope="col"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="ci :${cart}" th:id="'ci_' + ${ci.id}">
+						<td th:text="${ci.product.name}"></td>
+						<td th:text="${ci.quantity}"></td>
+						<td>
+							<button class="btn btn-outline-info" th:data-id="${ci.id}" onclick="removeItem(this.getAttribute('data-id'))">Remove</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<hr>
+			
+			<div class="row">
+    			<div class="col-sm">
+      				<label>Shipping Address</label>
+					<select id="selectedShippingAddress" class="form-control" name="shipping-address">
+						<option value="0">Choose an address</option>
+						<option th:each="addr : ${addresses}" th:value="${{addr.id}}" th:text="${addr.full}"></option>
+					</select>
+					<small>If you don't have any address here, you should go to <a href="/buyer/address">here</a></small>
+    			</div>
+    			<div class="col-sm">
+      				<label>Shipping Address</label>
+					<select id="selectedCreditCard" class="form-control" name="cc">
+						<option value="0">Choose a credit card</option>
+						<option th:each="c : ${cards}" th:value="${{c.id}}" th:text="${c.maskedNumber}"></option>
+					</select>
+					<small>If you don't have any credit card here, you should go to <a href="/buyer/payment">here</a></small>
+    			</div>
+   			</div>
+			
+			<br>
+			
+			
+			<button class="btn btn-info" onclick="placeOrder()">Place order</button>
+		</div>
+	
+	</div>
+
+</body>
+</html>
